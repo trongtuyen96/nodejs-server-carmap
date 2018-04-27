@@ -4,7 +4,7 @@ A simple nodejs server with Restful API using Express, Mongoose,..
 
 ## Installation
 
-You need to reinstall all package by: npm install
+You need to reinstall all packages by: npm install
 
 ## Usage
 

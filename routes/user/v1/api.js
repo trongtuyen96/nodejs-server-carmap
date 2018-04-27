@@ -17,5 +17,4 @@ app.use('/car', require('./car'));
 app.use('/location', require('./location'));
 app.use('/report', require('./report'));
 
-
 module.exports = app;

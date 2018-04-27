@@ -3,14 +3,11 @@ var app = express.Router();
 var bodyParser = require('body-parser');
 
 
-
-
-
 app.use('/register', require('./register'));
 app.use('/auth', require('./auth'));
 
-// // Authenication before access other APIs
-// app.use(require('./auth-middleware'));
+// Authenication before access other APIs
+app.use(require('./auth-middleware'));
 
 // Below APIs need an authentication
 app.use('/user', require('./user'));

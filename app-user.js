@@ -35,9 +35,12 @@ mongoose.connect(config.database);
 mongoose.connection.once('open', function () {
     // Create sample data for database 
     var user = new User({
+        email: 'user1@gmail.com',
+        password: '123456',
         name: 'Tuyen',
+        birthDate: "1996-12-13",
         googleUserID: '11111111',
-        avatar: 'so talent',
+        avatar: 'avatar.url',
         homeLocation: {
             type: 'Point',
             // must follow longitude, latitude order
@@ -123,14 +126,14 @@ app.use(expressValidator());
 app.use(logger('dev'));
 
 // Configuration
-// app.set('secret-jwt', config.secret);
+app.set('secret-jwt', config.secret);
 
 // Log request middleware
-// app.use(function(req, res, next){
-//     //console.log('Url: ', req.originalUrl);
-//     console.log('Body: ', req.body);
-//     next();
-// });
+app.use(function(req, res, next){
+    //console.log('Url: ', req.originalUrl);
+    console.log('Body: ', req.body);
+    next();
+});
 
 // Home page
 app.get("/", function (req, res) {

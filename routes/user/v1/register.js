@@ -1,11 +1,11 @@
-var express = require('express');
-var User = require('../../../models/user');
-var router = express.Router();
+// var express = require('express');
+// var User = require('../../../models/user');
+// var router = express.Router();
 
-// register with google
-router.post("/google", function (req, res, next) {
-    res.send('register with google');
-});
+// // register with google
+// router.post("/google", function (req, res, next) {
+//     res.send('register with google');
+// });
 
 // // register with email
 // router.post("/email", function (req, res, next) {
@@ -32,10 +32,6 @@ router.post("/google", function (req, res, next) {
 //             },
 //             errorMessage: 'Ngày sinh không thể bỏ trống'
 //         },
-//         'gender': {
-//             notEmpty: true,
-//             errorMessage: 'Giới tính không thể bỏ trống' // Error message for the parameter
-//         },
 //         'name': {
 //             notEmpty: true,
 //             errorMessage: 'Tên không thể bỏ trống' // Error message for the parameter
@@ -51,7 +47,6 @@ router.post("/google", function (req, res, next) {
 //         email: req.body.email,
 //         password: req.body.password,
 //         birthDate: req.body.birthDate,
-//         gender: req.body.gender,
 //         name: req.body.name
 //     });
 
@@ -60,4 +55,4 @@ router.post("/google", function (req, res, next) {
 //     }).catch(next);
 // });
 
-module.exports = router;
+// module.exports = router;

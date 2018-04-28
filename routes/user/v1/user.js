@@ -4,9 +4,11 @@ var Car = require('../../../models/car');
 var router = express.Router();
 var Geo = require('../../../models/schemas/geo');
 
+// Require authenticate
+var authenticate = require('./auth-middleware');
 
 // Api for users
-router.get("/profile", function (req, res, next) {
+router.get("/profile", authenticate, function (req, res, next) {
     var userID = req.decoded.userID;
     if (!userID) {
         return res.status(422).send({
@@ -61,7 +63,7 @@ router.get("/profile", function (req, res, next) {
 // });
 
 // Get all user
-router.get("/", function(req, res, next) {
+router.get("/", authenticate, function(req, res, next) {
     User.find({}).then(function(users) {
         return res.status(200).json(
             users
@@ -70,7 +72,7 @@ router.get("/", function(req, res, next) {
 });
 
 // Update home location of user
-router.put("/updateHomeLocation", function(req, res, next){
+router.put("/updateHomeLocation", authenticate, function(req, res, next){
     var userID = req.decoded.userID;
     console.log(JSON.stringify(req.body.homeLocation));
     if (!userID) {
@@ -101,7 +103,7 @@ router.put("/updateHomeLocation", function(req, res, next){
 
 
 // Get car of user 
-router.get("/car", function (req, res, next) {
+router.get("/car", authenticate, function (req, res, next) {
     var userID = req.decoded.userID;
     if (!userID) {
         return res.status(422).send({

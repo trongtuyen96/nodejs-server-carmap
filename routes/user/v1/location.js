@@ -5,13 +5,16 @@ var mongoose = require('mongoose');
 var Location = require('../../../models/location')
 
 
-router.get("/:id", function(req, res, next){
+router.get("/:id", function (req, res, next) {
     var locationID = req.params.id;
-
+    // validate the id  -> return 404
+    if (!ObjectID.isValid(locationID)) {
+        return res.status(404).send('Không tìm thấy địa điểm');
+    }
     Location
         .findById(locationID)
-        .then(function(location){
-            if(!location){
+        .then(function (location) {
+            if (!location) {
                 return res(404).json({
                     success: false,
                     message: "Không tìm thấy địa điểm"
@@ -22,8 +25,8 @@ router.get("/:id", function(req, res, next){
 });
 
 // Get all locations
-router.get("/", function(req, res, next) {
-    Location.find({}).then(function(locations) {
+router.get("/", function (req, res, next) {
+    Location.find({}).then(function (locations) {
         return res.status(200).json(
             locations
         );

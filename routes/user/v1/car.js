@@ -5,13 +5,16 @@ var mongoose = require('mongoose');
 var Car = require('../../../models/car')
 
 // Get car by ID
-router.get("/:id", function(req, res, next){
+router.get("/:id", function (req, res, next) {
     var carID = req.params.id;
-
+    // validate the id  -> return 404
+    if (!ObjectID.isValid(carID)) {
+        return res.status(404).send('Không tìm thấy xe');
+    }
     Car
         .findById(carID)
-        .then(function(car){
-            if(!car){
+        .then(function (car) {
+            if (!car) {
                 return res(404).json({
                     success: false,
                     message: "Không tìm thấy xe"
@@ -22,8 +25,8 @@ router.get("/:id", function(req, res, next){
 });
 
 // Get all cars
-router.get("/", function(req, res, next) {
-    Car.find({}).then(function(cars) {
+router.get("/", function (req, res, next) {
+    Car.find({}).then(function (cars) {
         return res.status(200).json(
             cars
         );

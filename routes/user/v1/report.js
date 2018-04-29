@@ -9,7 +9,10 @@ router.get("/:id", function (req, res, next) {
     var reportID = req.params.id;
     // validate the id  -> return 404
     if (!ObjectID.isValid(reportID)) {
-        return res.status(404).send('Không tìm thấy report');
+        return res(404).json({
+            success: false,
+            message: "Không tìm thấy report"
+        })
     }
     Report
         .findById(reportID)

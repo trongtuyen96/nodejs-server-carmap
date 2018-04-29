@@ -9,7 +9,10 @@ router.get("/:id", function (req, res, next) {
     var carID = req.params.id;
     // validate the id  -> return 404
     if (!ObjectID.isValid(carID)) {
-        return res.status(404).send('Không tìm thấy xe');
+        return res(404).json({
+            success: false,
+            message: "Không tìm thấy xe"
+        })
     }
     Car
         .findById(carID)

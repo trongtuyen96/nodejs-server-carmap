@@ -14,15 +14,6 @@ var Report = require('./models/report');
 var app = express();
 
 
-// // Test socket
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-
-
-// Test socket 2
-// var socketEvents = require('./socketEvents');
-
-
 // Connect to mongo db
 // 1. Drop old database
 mongoose.connect(config.database);
@@ -129,7 +120,7 @@ app.use(logger('dev'));
 app.set('secret-jwt', config.secret);
 
 // Log request middleware
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     //console.log('Url: ', req.originalUrl);
     console.log('Body: ', req.body);
     next();
@@ -139,36 +130,6 @@ app.use(function(req, res, next){
 app.get("/", function (req, res) {
     res.send("Car Map API<br>API for user: /api-user/v1/xxx");
 })
-
-
-// Greeting other car
-app.get("/greeting", function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-
-
-// io.on('connection', function (socket) {
-//     console.log('a user connected');
-
-//     socket.on('chat message', function (msg) {
-//         console.log('message: ' + msg);
-//         io.emit('chat message', msg);
-//     });
-
-//     socket.on('disconnect', function () {
-//         console.log('user disconnected');
-//     });
-// });
-
-// http.listen(3001, function () {
-//     console.log('listening on *:3001');
-// });
-
-// tesst socket 2
-// var http = require('http').Server(app);
-// const io = require('socket.io').listen(http);
-// socketEvents(io);
-
 
 // RESTful API handler
 app.use('/api-user', require('./routes/user/api'));
@@ -182,7 +143,29 @@ app.use(function (err, req, res, next) {
     })
 })
 
-// Listen request from client on port 
-app.listen(config.port, function () {
-    console.log("Server user clients ready on port 3000");
-})
+// // Listen request from client on port 
+// app.listen(config.port, function () {
+//     console.log("Server user clients ready on port 3000");
+// })
+
+
+// Set up for socket
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function (socket) {
+    console.log('a user connected');
+
+    socket.on('chat message', function (msg) {
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+});
+
+http.listen(config.port, function () {
+    console.log('listening on *:'+ config.port);
+});

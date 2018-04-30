@@ -7,6 +7,10 @@ var Geo = require('../../../models/schemas/geo');
 // Require authenticate
 var authenticate = require('./auth-middleware');
 
+
+
+
+
 // Api for users
 router.get("/profile", authenticate, function (req, res, next) {
     var userID = req.decoded.userID;
@@ -20,7 +24,7 @@ router.get("/profile", authenticate, function (req, res, next) {
     User
         .findById(userID)
         .select('-password')
-        .then(function(user) {
+        .then(function (user) {
             if (!user) {
                 return res.status(404).json({
                     success: false,
@@ -32,7 +36,7 @@ router.get("/profile", authenticate, function (req, res, next) {
                 success: true,
                 user: user
             });
-    }).catch(next);
+        }).catch(next);
 });
 
 // router.get("/:id", function (req, res, next) {
@@ -63,8 +67,8 @@ router.get("/profile", authenticate, function (req, res, next) {
 // });
 
 // Get all user
-router.get("/", authenticate, function(req, res, next) {
-    User.find({}).then(function(users) {
+router.get("/", authenticate, function (req, res, next) {
+    User.find({}).then(function (users) {
         return res.status(200).json(
             users
         );
@@ -72,7 +76,7 @@ router.get("/", authenticate, function(req, res, next) {
 });
 
 // Update home location of user
-router.put("/updateHomeLocation", authenticate, function(req, res, next){
+router.put("/updateHomeLocation", authenticate, function (req, res, next) {
     var userID = req.decoded.userID;
     console.log(JSON.stringify(req.body.homeLocation));
     if (!userID) {
@@ -84,9 +88,9 @@ router.put("/updateHomeLocation", authenticate, function(req, res, next){
 
     User
         .findByIdAndUpdate(userID, {
-            homeLocation : req.body.homeLocation
+            homeLocation: req.body.homeLocation
         })
-        .then(function(user) {
+        .then(function (user) {
             if (!user) {
                 return res.status(404).json({
                     success: false,
@@ -97,10 +101,8 @@ router.put("/updateHomeLocation", authenticate, function(req, res, next){
                 success: true,
                 user: user
             });
-    }).catch(next);
+        }).catch(next);
 })
-
-
 
 // Get car of user 
 router.get("/car", authenticate, function (req, res, next) {
@@ -113,8 +115,8 @@ router.get("/car", authenticate, function (req, res, next) {
     }
 
     Car
-        .findOne({userID: userID})
-        .then(function(car) {
+        .findOne({ userID: userID })
+        .then(function (car) {
             if (!car) {
                 return res.status(404).json({
                     success: false,
@@ -126,36 +128,12 @@ router.get("/car", authenticate, function (req, res, next) {
                 success: true,
                 car: car
             });
-    }).catch(next);
+        }).catch(next);
 });
 
-// // Greeting other car
-// router.get("/greeting", function (req, res, next) {
-//     try
-//     {
-//     res.sendFile(__dirname + '/index.html');
-//     con.log(__dirname);
-
-//     io.on('connection', function(socket){
-//         console.log('a user connected');
-      
-//         socket.on('chat message', function(msg){
-//           console.log('message: ' + msg);
-//           io.emit('chat message', msg);
-//         });
-      
-      
-//         socket.on('disconnect', function(){
-//           console.log('user disconnected');
-//         });
-//       });
-      
-//       http.listen(3000, function(){
-//         console.log('listening on *:3000');
-//       });
-//     }
-//     catch(next){};
-// });
-
+// Greeting other car
+router.get("/greeting", function (req, res, next) {
+    res.sendFile(__dirname + '' + '/index.html');
+});
 
 module.exports = router;

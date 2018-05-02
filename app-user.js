@@ -249,6 +249,6 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(config.port, function () {
-    console.log('listening on *:'+ config.port);
+http.listen(process.env.PORT, function () {
+    console.log('listening on *:'+ process.env.PORT);
 });

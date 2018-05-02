@@ -226,29 +226,29 @@ app.use(function (err, req, res, next) {
     })
 })
 
-// Listen request from client on port 
-app.listen(config.port, function () {
-    console.log("Server user clients ready on port 3000");
-})
+// // Listen request from client on port 
+// app.listen(config.port, function () {
+//     console.log("Server user clients ready on port 3000");
+// })
 
 
-// // Set up for socket
-// var http = require('http').createServer(app);
-// var io = require('socket.io')(http);
+// Set up for socket
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
 
-// io.on('connection', function (socket) {
-//     console.log('a user connected');
+io.on('connection', function (socket) {
+    console.log('a user connected');
 
-//     socket.on('chat message', function (msg) {
-//         console.log('message: ' + msg);
-//         io.emit('chat message', msg);
-//     });
+    socket.on('chat message', function (msg) {
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
+    });
 
-//     socket.on('disconnect', function () {
-//         console.log('user disconnected');
-//     });
-// });
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+});
 
-// http.listen(config.port, function () {
-//     console.log('listening on *:'+ config.port);
-// });
+http.listen(config.port, function () {
+    console.log('listening on *:'+ config.port);
+});

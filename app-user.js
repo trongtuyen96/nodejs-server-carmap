@@ -210,7 +210,7 @@ app.use(function (req, res, next) {
 
 
 // Home page
-app.get("/", function (req, res) {
+app.get('/', function (req, res) {
     res.send("Car Map API<br>API for user: /api-user/v1/xxx");
 })
 
@@ -249,6 +249,6 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(process.env.PORT, function () {
-    console.log('listening on *:'+ process.env.PORT);
+http.listen(config.port, function () {
+    console.log('listening on *:'+ config.port);
 });

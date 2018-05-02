@@ -13,6 +13,30 @@ var Report = require('./models/report');
 // Set up express app
 var app = express();
 
+// Body-parser json
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// This line must be right after any of the bodyParser middleware
+app.use(expressValidator());
+
+// express serve static files
+// app.use('/public/', express.static('./public'));
+
+// Morgan to log any request to console
+app.use(logger('dev'));
+
+// Configuration
+app.set('secret-jwt', config.secret);
+
+// Log request middleware
+app.use(function (req, res, next) {
+    //console.log('Url: ', req.originalUrl);
+    console.log('Body: ', req.body);
+    next();
+});
+
+
 // ////////////////// LOCAL /////////////////////
 // // Connect to mongo db
 // // 1. Drop old database
@@ -101,70 +125,70 @@ var app = express();
 // Connect to mongo db m-Lab
 mongoose.connect(config.database_mlab);
 mongoose.connection.once('open', function () {
-    // Create sample data for database 
-    var user = new User({
-        email: 'user1@gmail.com',
-        password: '123456',
-        name: 'Tuyen',
-        birthDate: "1996-12-13",
-        googleUserID: '11111111',
-        avatar: 'avatar.url',
-        homeLocation: {
-            type: 'Point',
-            // must follow longitude, latitude order
-            coordinates: [105.005675, 10.367511]
-        }
-    });
-    user.save(function (err, user) {
-        if (err) return console.error(err);
-        console.log(user);
-    });
+    // // Create sample data for database 
+    // var user = new User({
+    //     email: 'user1@gmail.com',
+    //     password: '123456',
+    //     name: 'Tuyen',
+    //     birthDate: "1996-12-13",
+    //     googleUserID: '11111111',
+    //     avatar: 'avatar.url',
+    //     homeLocation: {
+    //         type: 'Point',
+    //         // must follow longitude, latitude order
+    //         coordinates: [105.005675, 10.367511]
+    //     }
+    // });
+    // user.save(function (err, user) {
+    //     if (err) return console.error(err);
+    //     console.log(user);
+    // });
 
-    var car = new Car({
-        type: 1,
-        lastestGeo: {
-            type: "Point",
-            coordinates: [105.045705, 21.345696]
-        },
-        currentGeo: {
-            type: "Point",
-            coordinates: [105.078940, 21.312346]
-        },
-        speed: 80,
-        userID: user._id
-    });
-    car.save(function (err, car) {
-        if (err) return console.error(err);
-        console.log(car);
-    });
+    // var car = new Car({
+    //     type: 1,
+    //     lastestGeo: {
+    //         type: "Point",
+    //         coordinates: [105.045705, 21.345696]
+    //     },
+    //     currentGeo: {
+    //         type: "Point",
+    //         coordinates: [105.078940, 21.312346]
+    //     },
+    //     speed: 80,
+    //     userID: user._id
+    // });
+    // car.save(function (err, car) {
+    //     if (err) return console.error(err);
+    //     console.log(car);
+    // });
 
-    var location = new Location({
-        geomatry: {
-            type: "Point",
-            coordinates: [105.045705, 21.345696]
-        },
-        name: 'Home',
-        userID: user._id
-    });
-    location.save(function (err, location) {
-        if (err) return console.error(err);
-        console.log(location);
-    });
+    // var location = new Location({
+    //     geomatry: {
+    //         type: "Point",
+    //         coordinates: [105.045705, 21.345696]
+    //     },
+    //     name: 'Home',
+    //     userID: user._id
+    // });
+    // location.save(function (err, location) {
+    //     if (err) return console.error(err);
+    //     console.log(location);
+    // });
 
-    var report = new Report({
-        type: 1,
-        desciption: 'Trafic jam',
-        geomatry: {
-            type: "Point",
-            coordinates: [105.045705, 21.345696]
-        },
-        severity: 3,
-        userID: user._id
-    });
-    report.save(function (err, report) {
-        if (err) return console.error(err);
-        console.log(report);
-    });
+    // var report = new Report({
+    //     type: 1,
+    //     desciption: 'Trafic jam',
+    //     geomatry: {
+    //         type: "Point",
+    //         coordinates: [105.045705, 21.345696]
+    //     },
+    //     severity: 3,
+    //     userID: user._id
+    // });
+    // report.save(function (err, report) {
+    //     if (err) return console.error(err);
+    //     console.log(report);
+    // });
 
     console.log('Connect to database successfuly');
 }).on('error', function () {
@@ -181,28 +205,8 @@ app.use(function (req, res, next) {
     next();
 })
 
-// Body-parser json
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
-// This line must be right after any of the bodyParser middleware
-app.use(expressValidator());
 
-// express serve static files
-// app.use('/public/', express.static('./public'));
-
-// Morgan to log any request to console
-app.use(logger('dev'));
-
-// Configuration
-app.set('secret-jwt', config.secret);
-
-// Log request middleware
-app.use(function (req, res, next) {
-    //console.log('Url: ', req.originalUrl);
-    console.log('Body: ', req.body);
-    next();
-});
 
 // Home page
 app.get("/", function (req, res) {

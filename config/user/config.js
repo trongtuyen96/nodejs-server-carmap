@@ -5,6 +5,7 @@ module.exports = {
 
     // Database connection 
     'database': 'mongodb://localhost:27017/carmap',
+    'dataase_mlab': 'mongodb://admin:123456@ds211440.mlab.com:11440/carmap',
     
     // Setting port for server
     'port': process.env.port || 3000

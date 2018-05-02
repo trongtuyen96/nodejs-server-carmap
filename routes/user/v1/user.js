@@ -8,9 +8,6 @@ var Geo = require('../../../models/schemas/geo');
 var authenticate = require('./auth-middleware');
 
 
-
-
-
 // Api for users
 router.get("/profile", authenticate, function (req, res, next) {
     var userID = req.decoded.userID;

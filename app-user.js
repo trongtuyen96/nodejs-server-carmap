@@ -13,29 +13,6 @@ var Report = require('./models/report');
 // Set up express app
 var app = express();
 
-// Body-parser json
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// This line must be right after any of the bodyParser middleware
-app.use(expressValidator());
-
-// express serve static files
-// app.use('/public/', express.static('./public'));
-
-// Morgan to log any request to console
-app.use(logger('dev'));
-
-// Configuration
-app.set('secret-jwt', config.secret);
-
-// Log request middleware
-app.use(function (req, res, next) {
-    //console.log('Url: ', req.originalUrl);
-    console.log('Body: ', req.body);
-    next();
-});
-
 
 // ////////////////// LOCAL /////////////////////
 // // Connect to mongo db
@@ -195,6 +172,30 @@ mongoose.connection.once('open', function () {
     console.log('Conmect to database failed')
 });
 ////////////////// END mLab - Heroku ////////////////
+
+
+// Body-parser json
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// This line must be right after any of the bodyParser middleware
+app.use(expressValidator());
+
+// express serve static files
+// app.use('/public/', express.static('./public'));
+
+// Morgan to log any request to console
+app.use(logger('dev'));
+
+// Configuration
+app.set('secret-jwt', config.secret);
+
+// Log request middleware
+app.use(function (req, res, next) {
+    //console.log('Url: ', req.originalUrl);
+    console.log('Body: ', req.body);
+    next();
+});
 
 // enable CORS from client-side
 app.use(function (req, res, next) {

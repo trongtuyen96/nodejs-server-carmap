@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var GeoSchema = require('./schemas/geo')
+const GeoSchema = require('./schemas/geo')
 
-var CarSchema = new Schema({
+const CarSchema = new Schema({
     type: Number,
     lastestGeo: GeoSchema,
     currentGeo: GeoSchema,
@@ -14,6 +14,6 @@ var CarSchema = new Schema({
     }
 })
 
-var Car = mongoose.model('car', CarSchema);
+const Car = mongoose.model('car', CarSchema);
 
 module.exports = Car;

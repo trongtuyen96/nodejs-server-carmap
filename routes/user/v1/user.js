@@ -1,16 +1,16 @@
-var express = require('express');
-var User = require('../../../models/user');
-var Car = require('../../../models/car');
-var router = express.Router();
-var Geo = require('../../../models/schemas/geo');
+const express = require('express');
+const User = require('../../../models/user');
+const Car = require('../../../models/car');
+const router = express.Router();
+const Geo = require('../../../models/schemas/geo');
 
 // Require authenticate
-var authenticate = require('./auth-middleware');
+const authenticate = require('./auth-middleware');
 
 
 // Api for users
-router.get("/profile", authenticate, function (req, res, next) {
-    var userID = req.decoded.userID;
+router.get("/profile", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
     if (!userID) {
         return res.status(422).send({
             success: false,
@@ -21,7 +21,7 @@ router.get("/profile", authenticate, function (req, res, next) {
     User
         .findById(userID)
         .select('-password')
-        .then(function (user) {
+        .then((user) => {
             if (!user) {
                 return res.status(404).json({
                     success: false,
@@ -36,36 +36,9 @@ router.get("/profile", authenticate, function (req, res, next) {
         }).catch(next);
 });
 
-// router.get("/:id", function (req, res, next) {
-//     var userID = req.params.id;
-//     if (!userID) {
-//         return res.status(422).send({
-//             success: false,
-//             message: "Không thể truy cập userID"
-//         });
-//     }
-
-//     User
-//         .findById(userID)
-//         // .select('-password')
-//         .then(function(user) {
-//             if (!user) {
-//                 return res.status(404).json({
-//                     success: false,
-//                     message: "Người dùng không tồn tại"
-//                 });
-//             }
-
-//             return res.status(200).send({
-//                 success: true,
-//                 user: user
-//             });
-//     }).catch(next);
-// });
-
 // Get all user
-router.get("/", authenticate, function (req, res, next) {
-    User.find({}).then(function (users) {
+router.get("/", authenticate, (req, res, next) => {
+    User.find({}).then((users) => {
         return res.status(200).json(
             users
         );
@@ -73,8 +46,8 @@ router.get("/", authenticate, function (req, res, next) {
 });
 
 // Update home location of user
-router.put("/updateHomeLocation", authenticate, function (req, res, next) {
-    var userID = req.decoded.userID;
+router.put("/updateHomeLocation", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
     console.log(JSON.stringify(req.body.homeLocation));
     if (!userID) {
         return res.status(422).send({
@@ -87,7 +60,7 @@ router.put("/updateHomeLocation", authenticate, function (req, res, next) {
         .findByIdAndUpdate(userID, {
             homeLocation: req.body.homeLocation
         })
-        .then(function (user) {
+        .then((user) => {
             if (!user) {
                 return res.status(404).json({
                     success: false,
@@ -102,8 +75,8 @@ router.put("/updateHomeLocation", authenticate, function (req, res, next) {
 })
 
 // Get car of user 
-router.get("/car", authenticate, function (req, res, next) {
-    var userID = req.decoded.userID;
+router.get("/car", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
     if (!userID) {
         return res.status(422).send({
             success: false,
@@ -113,7 +86,7 @@ router.get("/car", authenticate, function (req, res, next) {
 
     Car
         .findOne({ userID: userID })
-        .then(function (car) {
+        .then((car) => {
             if (!car) {
                 return res.status(404).json({
                     success: false,
@@ -129,7 +102,7 @@ router.get("/car", authenticate, function (req, res, next) {
 });
 
 // Greeting other car
-router.get("/greeting", function (req, res, next) {
+router.get("/greeting", (req, res, next) => {
     res.sendFile(__dirname + '' + '/index.html');
 });
 

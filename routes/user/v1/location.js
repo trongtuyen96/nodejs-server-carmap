@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var Geo = require('../../../models/schemas/geo')
-var mongoose = require('mongoose');
-var Location = require('../../../models/location')
+const express = require('express');
+const router = express.Router();
+const Geo = require('../../../models/schemas/geo')
+const mongoose = require('mongoose');
+const Location = require('../../../models/location')
 
 
-router.get("/:id", function (req, res, next) {
-    var locationID = req.params.id;
+router.get("/:id", (req, res, next) => {
+    let locationID = req.params.id;
     // validate the id  -> return 404
     if (!ObjectID.isValid(locationID)) {
         return res(404).json({
@@ -16,7 +16,7 @@ router.get("/:id", function (req, res, next) {
     }
     Location
         .findById(locationID)
-        .then(function (location) {
+        .then((location) => {
             if (!location) {
                 return res(404).json({
                     success: false,
@@ -28,8 +28,8 @@ router.get("/:id", function (req, res, next) {
 });
 
 // Get all locations
-router.get("/", function (req, res, next) {
-    Location.find({}).then(function (locations) {
+router.get("/", (req, res, next) => {
+    Location.find({}).then((locations) => {
         return res.status(200).json(
             locations
         );

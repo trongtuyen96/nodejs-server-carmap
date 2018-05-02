@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
-var GeoSchema = require('./schemas/geo');
-var bcrypt = require('bcrypt'), 
+const mongoose = require('mongoose');
+const GeoSchema = require('./schemas/geo');
+const bcrypt = require('bcrypt'), 
     SALT_WORK_FACTOR = 10;
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -34,12 +34,12 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 // Hash password
 UserSchema.methods.hashPassword = function() {
-    var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+    let salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
     this.password =  bcrypt.hashSync(this.password, salt);
 };
 
 UserSchema.pre('save', function(next) {
-    var user = this;
+    let user = this;
 
     // only hash the password if it hasn't been modified (or is new)
     if (!user.isModified('password')) return next();
@@ -49,7 +49,7 @@ UserSchema.pre('save', function(next) {
         if (err) return next(err);
 
         // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
+        bcrypt.hash(user.password, salt, function (err, hash) {
             if (err) return next(err);
 
             // override the cleartext password with the hashed one

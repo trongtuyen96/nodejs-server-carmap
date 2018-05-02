@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var GeoSchema = require('./schemas/geo');
+const GeoSchema = require('./schemas/geo');
 
-var ReportSchema = new Schema({
+const ReportSchema = new Schema({
     type: {
         type: Number,
         require: true
@@ -23,6 +23,6 @@ var ReportSchema = new Schema({
 })
 
 
-var Report = mongoose.model('report', ReportSchema);
+const Report = mongoose.model('report', ReportSchema);
 
 module.exports = Report;

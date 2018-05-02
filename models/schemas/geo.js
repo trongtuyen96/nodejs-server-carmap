@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var GeoSchema = new Schema({
+const GeoSchema = new Schema({
     type: {
         type: String,
         default: 'Point'

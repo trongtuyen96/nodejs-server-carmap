@@ -1,17 +1,17 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var logger = require('morgan');
-var config = require('./config/user/config');
-var expressValidator = require('express-validator');
-var User = require('./models/user');
-var Car = require('./models/car');
-var Location = require('./models/location');
-var Report = require('./models/report');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const config = require('./config/user/config');
+const expressValidator = require('express-validator');
+const User = require('./models/user');
+const Car = require('./models/car');
+const Location = require('./models/location');
+const Report = require('./models/report');
 
 
 // Set up express app
-var app = express();
+const app = express();
 
 
 // ////////////////// LOCAL /////////////////////
@@ -101,75 +101,75 @@ var app = express();
 // Only run first time to create data for mLab collections
 // Connect to mongo db m-Lab
 mongoose.connect(config.database_mlab);
-mongoose.connection.once('open', function () {
-    // // Create sample data for database 
-    // var user = new User({
-    //     email: 'user1@gmail.com',
-    //     password: '123456',
-    //     name: 'Tuyen',
-    //     birthDate: "1996-12-13",
-    //     googleUserID: '11111111',
-    //     avatar: 'avatar.url',
-    //     homeLocation: {
-    //         type: 'Point',
-    //         // must follow longitude, latitude order
-    //         coordinates: [105.005675, 10.367511]
-    //     }
-    // });
-    // user.save(function (err, user) {
-    //     if (err) return console.error(err);
-    //     console.log(user);
-    // });
+mongoose.connection.once('open',() =>{
+//     // Create sample data for database 
+//     var user = new User({
+//         email: 'user1@gmail.com',
+//         password: '123456',
+//         name: 'Tuyen',
+//         birthDate: "1996-12-13",
+//         googleUserID: '11111111',
+//         avatar: 'avatar.url',
+//         homeLocation: {
+//             type: 'Point',
+//             // must follow longitude, latitude order
+//             coordinates: [105.005675, 10.367511]
+//         }
+//     });
+//     user.save(function (err, user) {
+//         if (err) return console.error(err);
+//         console.log(user);
+//     });
 
-    // var car = new Car({
-    //     type: 1,
-    //     lastestGeo: {
-    //         type: "Point",
-    //         coordinates: [105.045705, 21.345696]
-    //     },
-    //     currentGeo: {
-    //         type: "Point",
-    //         coordinates: [105.078940, 21.312346]
-    //     },
-    //     speed: 80,
-    //     userID: user._id
-    // });
-    // car.save(function (err, car) {
-    //     if (err) return console.error(err);
-    //     console.log(car);
-    // });
+//     var car = new Car({
+//         type: 1,
+//         lastestGeo: {
+//             type: "Point",
+//             coordinates: [105.045705, 21.345696]
+//         },
+//         currentGeo: {
+//             type: "Point",
+//             coordinates: [105.078940, 21.312346]
+//         },
+//         speed: 80,
+//         userID: user._id
+//     });
+//     car.save(function (err, car) {
+//         if (err) return console.error(err);
+//         console.log(car);
+//     });
 
-    // var location = new Location({
-    //     geomatry: {
-    //         type: "Point",
-    //         coordinates: [105.045705, 21.345696]
-    //     },
-    //     name: 'Home',
-    //     userID: user._id
-    // });
-    // location.save(function (err, location) {
-    //     if (err) return console.error(err);
-    //     console.log(location);
-    // });
+//     var location = new Location({
+//         geomatry: {
+//             type: "Point",
+//             coordinates: [105.045705, 21.345696]
+//         },
+//         name: 'Home',
+//         userID: user._id
+//     });
+//     location.save(function (err, location) {
+//         if (err) return console.error(err);
+//         console.log(location);
+//     });
 
-    // var report = new Report({
-    //     type: 1,
-    //     desciption: 'Trafic jam',
-    //     geomatry: {
-    //         type: "Point",
-    //         coordinates: [105.045705, 21.345696]
-    //     },
-    //     severity: 3,
-    //     userID: user._id
-    // });
-    // report.save(function (err, report) {
-    //     if (err) return console.error(err);
-    //     console.log(report);
-    // });
+//     var report = new Report({
+//         type: 1,
+//         desciption: 'Trafic jam',
+//         geomatry: {
+//             type: "Point",
+//             coordinates: [105.045705, 21.345696]
+//         },
+//         severity: 3,
+//         userID: user._id
+//     });
+//     report.save(function (err, report) {
+//         if (err) return console.error(err);
+//         console.log(report);
+//     });
 
-    console.log('Connect to database successfuly');
-}).on('error', function () {
-    console.log('Conmect to database failed')
+//     console.log('Connect to database successfuly');
+// }).on('error',() => {
+//     console.log('Conmect to database failed')
 });
 ////////////////// END mLab - Heroku ////////////////
 
@@ -191,14 +191,14 @@ app.use(logger('dev'));
 app.set('secret-jwt', config.secret);
 
 // Log request middleware
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     //console.log('Url: ', req.originalUrl);
     console.log('Body: ', req.body);
     next();
 });
 
 // enable CORS from client-side
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Alow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-ALlow-Credentials");
@@ -210,7 +210,7 @@ app.use(function (req, res, next) {
 
 
 // Home page
-app.get("/", function (req, res) {
+app.get("/",(req, res) => {
     res.send("Car Map API<br>API for user: /api-user/v1/xxx");
 })
 
@@ -218,7 +218,7 @@ app.get("/", function (req, res) {
 app.use('/api-user', require('./routes/user/api'));
 
 // Error handling middlware
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send({
         success: false,
@@ -233,22 +233,22 @@ app.use(function (err, req, res, next) {
 
 
 // Set up for socket
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
-io.on('connection', function (socket) {
+io.on('connection',(socket) => {
     console.log('a user connected');
 
-    socket.on('chat message', function (msg) {
+    socket.on('chat message',(msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
     });
 
-    socket.on('disconnect', function () {
+    socket.on('disconnect',() => {
         console.log('user disconnected');
     });
 });
 
-http.listen(config.port, function () {
+http.listen(config.port,() => {
     console.log('listening on *:'+ config.port);
 });

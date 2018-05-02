@@ -1,10 +1,10 @@
-var config = require('../../../config/user/config');
-var jwt = require('jsonwebtoken');
+const config = require('../../../config/user/config');
+const jwt = require('jsonwebtoken');
 
 // Auth middleware
-module.exports = function(req, res, next){
+module.exports = (req, res, next) => {
     // check header or url parameters for post parameters for token
-    var token = req.headers['x-access-token'];
+    let token = req.headers['x-access-token'];
 
     if(!token){
         return res.status(401).send({
@@ -14,7 +14,7 @@ module.exports = function(req, res, next){
     }
 
     // Decode token
-    jwt.verify(token, config.secret, function(err, decoded){
+    jwt.verify(token, config.secret, (err, decoded) => {
         if(err){
             return res.json({
                 success: false,

@@ -1,14 +1,14 @@
-var express = require('express');
-var User = require('../../../models/user');
-var router = express.Router();
+const express = require('express');
+const User = require('../../../models/user');
+const router = express.Router();
 
 // register with google
-router.post("/google", function (req, res, next) {
+router.post("/google", (req, res, next) => {
     res.send('register with google');
 });
 
 // register with email
-router.post("/email", function (req, res, next) {
+router.post("/email", (req, res, next) => {
     req.checkBody({
         'email': {
             notEmpty: true,
@@ -38,19 +38,19 @@ router.post("/email", function (req, res, next) {
         }
     });
 
-    var errors = req.validationErrors();
+    let errors = req.validationErrors();
     if (errors) {
         return res.status(422).send(errors);
     }
 
-    var user = new User({
+    let user = new User({
         email: req.body.email,
         password: req.body.password,
         name: req.body.name,
         birthDate: req.body.birthDate
     });
 
-    user.save().then(function(user) {
+    user.save().then((user) => {
         res.send(user)
     }).catch(next);
 });

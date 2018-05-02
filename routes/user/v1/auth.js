@@ -1,22 +1,22 @@
-var express = require('express');
-var User = require('../../../models/user');
-var router = express.Router();
-var config = require('../../../config/user/config');
-var jwt = require('jsonwebtoken');
-var request = require('request');
+const express = require('express');
+const User = require('../../../models/user');
+const router = express.Router();
+const config = require('../../../config/user/config');
+const jwt = require('jsonwebtoken');
+const request = require('request');
 
 // Auth with google
-router.post("/google", function (req, res) {
+router.post("/google", (req, res) => {
     res.send('welcome auth with google');
 });
 
 // auth with email
-router.post("/email", function (req, res, next) {
-    var email = req.body.email;
-    var password = req.body.password;
+router.post("/email", (req, res, next) => {
+    let email = req.body.email;
+    let password = req.body.password;
     console.log("Email: " + email + "\r\nPassword: " + password);
 
-    User.findOne({email: email}).then(function(user) {
+    User.findOne({email: email}).then((user) => {
        if (!user) {
            return res.status(404).json({
                success: false,
@@ -24,7 +24,7 @@ router.post("/email", function (req, res, next) {
            });
        }
 
-       user.comparePassword(password, function(err, isMatch) {
+       user.comparePassword(password, (err, isMatch) => {
            if (err) {
                return res.status(500).json({
                    success: false,
@@ -39,7 +39,7 @@ router.post("/email", function (req, res, next) {
                });
            }
 
-           var token = jwt.sign({userID: user._id}, config.secret, { expiresIn: config.tokenExpiresIn });
+           let token = jwt.sign({userID: user._id}, config.secret, { expiresIn: config.tokenExpiresIn });
 
            // return the information including token as JSON
            return res.status(200).json({
@@ -53,8 +53,8 @@ router.post("/email", function (req, res, next) {
 });
 
 // Refresh token
-router.post("/refresh_token", function(req, res, next) {
-    var accessToken = req.body.accessToken;
+router.post("/refresh_token", (req, res, next) => {
+    let accessToken = req.body.accessToken;
     if (accessToken === null) {
         return res.status(422).json({
             success: false,
@@ -62,7 +62,7 @@ router.post("/refresh_token", function(req, res, next) {
         })
     }
 
-    jwt.verify(accessToken, config.secret, function(err, decoded) {
+    jwt.verify(accessToken, config.secret, (err, decoded) => {
         if (err) {
             if (err.name === "TokenExpiredError") {
                 return res.status(401).json({
@@ -78,7 +78,7 @@ router.post("/refresh_token", function(req, res, next) {
         }
 
         // Check if user is exist!
-        User.findById(decoded.userID).then(function(user) {
+        User.findById(decoded.userID).then((user) => {
             console.log(user);
             if (!user) {
                 return res.status(404).json({
@@ -88,7 +88,7 @@ router.post("/refresh_token", function(req, res, next) {
             }
 
             // New access token
-            var newToken = jwt.sign({userID: decoded.userID}, config.secret, { expiresIn: config.tokenExpiresIn });
+            let newToken = jwt.sign({userID: decoded.userID}, config.secret, { expiresIn: config.tokenExpiresIn });
             // Return the information including token as JSON
             return res.status(200).json({
                 success: true,

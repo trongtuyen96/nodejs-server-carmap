@@ -1,6 +1,6 @@
-var express = require('express');
-var app = express.Router();
-var bodyParser = require('body-parser');
+const express = require('express');
+const app = express.Router();
+const bodyParser = require('body-parser');
 
 
 app.use('/register', require('./register'));

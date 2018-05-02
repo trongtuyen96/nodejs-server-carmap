@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var GeoSchema = require('./schemas/geo');
+const GeoSchema = require('./schemas/geo');
 
-var LocationSchema = new Schema({
+const LocationSchema = new Schema({
     geomatry: GeoSchema,
     name: {
         type: String
@@ -15,6 +15,6 @@ var LocationSchema = new Schema({
 })
 
 
-var Location = mongoose.model('location', LocationSchema);
+const Location = mongoose.model('location', LocationSchema);
 
 module.exports = Location;

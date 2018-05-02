@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var Geo = require('../../../models/schemas/geo')
-var mongoose = require('mongoose');
-var Report = require('../../../models/report')
+const express = require('express');
+const router = express.Router();
+const Geo = require('../../../models/schemas/geo')
+const mongoose = require('mongoose');
+const Report = require('../../../models/report')
 
 // Get report by id
-router.get("/:id", function (req, res, next) {
-    var reportID = req.params.id;
+router.get("/:id", (req, res, next) => {
+    let reportID = req.params.id;
     // validate the id  -> return 404
     if (!ObjectID.isValid(reportID)) {
         return res(404).json({
@@ -16,7 +16,7 @@ router.get("/:id", function (req, res, next) {
     }
     Report
         .findById(reportID)
-        .then(function (report) {
+        .then((report) => {
             if (!report) {
                 return res(404).json({
                     success: false,
@@ -28,8 +28,8 @@ router.get("/:id", function (req, res, next) {
 });
 
 // Get all reports
-router.get("/", function (req, res, next) {
-    Report.find({}).then(function (reports) {
+router.get("/", (req, res, next) => {
+    Report.find({}).then((reports) => {
         return res.status(200).json(
             reports
         );

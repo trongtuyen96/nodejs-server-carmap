@@ -8,7 +8,7 @@ const Car = require('../../../models/car')
 router.get("/:id", (req, res, next) => {
     let carID = req.params.id;
     // validate the id  -> return 404
-    if (!ObjectID.isValid(carID)) {
+    if (!mongoose.Types.ObjectId.isValid(carID)) {
         return res(404).json({
             success: false,
             message: "Không tìm thấy xe"
@@ -18,7 +18,7 @@ router.get("/:id", (req, res, next) => {
         .findById(carID)
         .then((car) => {
             if (!car) {
-                return res(404).json({
+                return res.status(404).json({
                     success: false,
                     message: "Không tìm thấy xe"
                 })

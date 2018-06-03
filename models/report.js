@@ -8,18 +8,26 @@ const ReportSchema = new Schema({
         type: Number,
         require: true
     },
+    subtype1: {
+        type: String,
+        default: ""
+    },
+    subtype2: {
+        type: String,
+        default: ""
+    },
     desciption:{
-        type: String
+        type: String,
+        default: ""
     },
     geomatry: GeoSchema,
-    severity: {
-        type: Number,
-        required: true
-    },
     userID: {
         type: Schema.Types.ObjectId,
         ref: 'user'
-    }
+    },
+    numReport: Number,
+    numDelete: Number,
+    status: Boolean
 })
 
 

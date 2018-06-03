@@ -21,6 +21,7 @@ const UserSchema = new Schema({
     birthDate: Date,
     googleUserID: String, 
     avatar: String,
+    socketID: String,
     homeLocation: GeoSchema
 });
 

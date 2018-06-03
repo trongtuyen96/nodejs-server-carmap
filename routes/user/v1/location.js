@@ -8,8 +8,8 @@ const Location = require('../../../models/location')
 router.get("/:id", (req, res, next) => {
     let locationID = req.params.id;
     // validate the id  -> return 404
-    if (!ObjectID.isValid(locationID)) {
-        return res(404).json({
+    if (!mongoose.Types.ObjectId.isValid(locationID)) {
+        return res.status(404).json({
             success: false,
             message: "Không tìm thấy địa điểm"
         })
@@ -18,7 +18,7 @@ router.get("/:id", (req, res, next) => {
         .findById(locationID)
         .then((location) => {
             if (!location) {
-                return res(404).json({
+                return res.status(404).json({
                     success: false,
                     message: "Không tìm thấy địa điểm"
                 })

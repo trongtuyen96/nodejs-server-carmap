@@ -114,4 +114,45 @@ router.post("/", (req, res, next) => {
     }).catch(next);
 });
 
+router.get("/nearby", (req, res, next) => {
+    var lat = parseFloat(req.query.lat);
+    var lng = parseFloat(req.query.lng);
+    var radius = parseFloat(req.query.radius) || 300; //in meters
+
+    if ((!lng && lng !== 0) || (!lat && lat !== 0)) {
+        return res.status(422).json({
+            success: false,
+            message: "Yêu cầu tọa độ hiện tại với các tham số lng, lat"
+        });
+    }
+
+    var centralPoint = {
+        type: "Point",
+        coordinates: [lng, lat]
+    };
+
+    var geoOptions = {
+        spherical: true,
+        maxDistance: radius
+    };
+
+    console.log("Nearby Location: " + lat + "; " + lng);
+
+    Report.geoNear(centralPoint, geoOptions).then((results) => {
+        //console.log("Time consumed: " + stats.time);
+
+        var reports = [];
+        var distances = [];
+        results.forEach((result) =>  {
+           reports.push(result.obj);
+           distances.push(result.dis);
+        });
+
+        return res.status(200).json({
+           reports: reports,
+           distances: distances
+        });
+    }).catch(next);
+});
+
 module.exports = router;

@@ -97,4 +97,21 @@ router.put("/:id/updateNumDelete", (req, res, next) => {
         }).catch(next);
 })
 
+router.post("/", (req, res, next) => {
+    let report = new Report({
+        type: req.body.type,
+        subtype1: req.body.subtype1,
+        subtype2: req.body.subtype2,
+        description: req.body.description,
+        geometry: req.body.geometry,
+        userID: req.body.userID,
+        numReport: req.body.numReport,
+        numDelete: req.body.numDelete,
+        status: req.body.status
+    });
+    report.save().then((report) => {
+        res.send(report)
+    }).catch(next);
+});
+
 module.exports = router;

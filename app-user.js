@@ -222,7 +222,7 @@ app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send({
         success: false,
-        message: er.message
+        message: err.message
     })
 })
 
@@ -242,6 +242,11 @@ io.on('connection',(socket) => {
     socket.on('chat message',(msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
+    });
+
+    socket.on('say hello to someone',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('hello message', email, send_id, msg)
     });
 
     socket.on('disconnect',() => {

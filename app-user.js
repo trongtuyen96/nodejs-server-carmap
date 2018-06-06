@@ -259,6 +259,21 @@ io.on('connection',(socket) => {
         socket.broadcast.to(receive_id).emit('event_warn_police_socket', email, send_id, msg)
     });
 
+    socket.on('event_warn_slow_down_server',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('event_warn_slow_down_socket', email, send_id, msg)
+    });
+
+    socket.on('event_warn_turn_around_server',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('event_warn_turn_around_socket', email, send_id, msg)
+    });
+
+    socket.on('event_warn_thank_server',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('event_warn_thank_socket', email, send_id, msg)
+    });
+    
     socket.on('disconnect',() => {
         console.log('user disconnected');
     });

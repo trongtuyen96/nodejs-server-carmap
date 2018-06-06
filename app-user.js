@@ -244,9 +244,19 @@ io.on('connection',(socket) => {
         io.emit('chat message', msg);
     });
 
-    socket.on('say hello to someone',(email, send_id, receive_id, msg) => {
+    socket.on('event_hello_server',(email, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('hello message', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_hello_socket', email, send_id, msg)
+    });
+
+    socket.on('event_warn_strong_light_server',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('event_warn_strong_light_socket', email, send_id, msg)
+    });
+
+    socket.on('event_warn_police_server',(email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+        socket.broadcast.to(receive_id).emit('event_warn_police_socket', email, send_id, msg)
     });
 
     socket.on('disconnect',() => {

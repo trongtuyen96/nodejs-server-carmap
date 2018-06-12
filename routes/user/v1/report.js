@@ -108,7 +108,8 @@ router.post("/", (req, res, next) => {
         numReport: req.body.numReport,
         numDelete: req.body.numDelete,
         status: req.body.status,
-        byteAudioFile: req.body.byteAudioFile
+        byteAudioFile: req.body.byteAudioFile,
+        byteImageFile: req.body.byteImageFile
     });
     report.save().then((report) => {
         res.send(report)

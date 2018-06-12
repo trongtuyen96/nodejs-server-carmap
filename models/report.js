@@ -16,7 +16,7 @@ const ReportSchema = new Schema({
         type: String,
         default: ""
     },
-    desciption:{
+    desciption: {
         type: String,
         default: ""
     },
@@ -27,7 +27,11 @@ const ReportSchema = new Schema({
     },
     numReport: Number,
     numDelete: Number,
-    status: Boolean
+    status: Boolean,
+    byteAudioFile: {
+        type: String,
+        default: ""
+    }
 })
 
 

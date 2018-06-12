@@ -31,6 +31,10 @@ const ReportSchema = new Schema({
     byteAudioFile: {
         type: String,
         default: ""
+    },
+    byteImageFile: {
+        type: String,
+        default: ""
     }
 })
 

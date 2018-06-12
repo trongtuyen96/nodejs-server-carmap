@@ -49,13 +49,13 @@ router.put("/:id/updateNumReport", (req, res, next) => {
     }
     Report
         .findByIdAndUpdate(reportID, {
-            numReport : numReport + 1
+            numReport: numReport + 1
         })
         .then((report) => {
             if (report.numReport >= 2) {
                 Report.findByIdAndUpdate(reportID, {
-                    status : true
-                }).then((report)=>{
+                    status: true
+                }).then((report) => {
                     return res.status(200).send({
                         success: true,
                         report: report
@@ -81,11 +81,11 @@ router.put("/:id/updateNumDelete", (req, res, next) => {
     }
     Report
         .findByIdAndUpdate(reportID, {
-            numDelete : numDelete + 1
+            numDelete: numDelete + 1
         })
         .then((report) => {
             if (report.numDelete >= 2) {
-                Report.findByIdAndRemove(reportID).then((report)=>{
+                Report.findByIdAndRemove(reportID).then((report) => {
                     return res.status(200).send({
                         success: true
                     });
@@ -107,7 +107,8 @@ router.post("/", (req, res, next) => {
         userID: req.body.userID,
         numReport: req.body.numReport,
         numDelete: req.body.numDelete,
-        status: req.body.status
+        status: req.body.status,
+        byteAudioFile: req.body.byteAudioFile
     });
     report.save().then((report) => {
         res.send(report)
@@ -143,14 +144,14 @@ router.get("/nearby", (req, res, next) => {
 
         var reports = [];
         var distances = [];
-        results.forEach((result) =>  {
-           reports.push(result.obj);
-           distances.push(result.dis);
+        results.forEach((result) => {
+            reports.push(result.obj);
+            distances.push(result.dis);
         });
 
         return res.status(200).json({
-           reports: reports,
-           distances: distances
+            reports: reports,
+            distances: distances
         });
     }).catch(next);
 });

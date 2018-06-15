@@ -273,6 +273,11 @@ io.on('connection',(socket) => {
         console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_thank_socket', email, send_id, msg)
     });
+
+    socket.on('event_report_other_server',(email, send_id, receive_id, type, base64, license) => {
+        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + type);
+        socket.broadcast.to(receive_id).emit('event_report_other_socket', email, send_id, type, base64, license)
+    });
     
     socket.on('disconnect',() => {
         console.log('user disconnected');

@@ -101,82 +101,87 @@ const app = express();
 // Only run first time to create data for mLab collections
 // Connect to mongo db m-Lab
 mongoose.connect(config.database_mlab);
-mongoose.connection.once('open',() =>{
-//     // Create sample data for database 
-//     var user = new User({
-//         email: 'user1@gmail.com',
-//         password: '123456',
-//         name: 'Tuyen',
-//         birthDate: "1996-12-13",
-//         googleUserID: '11111111',
-//         avatar: 'avatar.url',
-//         homeLocation: {
-//             type: 'Point',
-//             // must follow longitude, latitude order
-//             coordinates: [105.005675, 10.367511]
-//         }
-//     });
-//     user.save(function (err, user) {
-//         if (err) return console.error(err);
-//         console.log(user);
-//     });
+mongoose.connection.once('open', () => {
+    //     // Create sample data for database 
+    //     var user = new User({
+    //         email: 'user1@gmail.com',
+    //         password: '123456',
+    //         name: 'Tuyen',
+    //         birthDate: "1996-12-13",
+    //         googleUserID: '11111111',
+    //         avatar: 'avatar.url',
+    //         socketID: '',
+    //         homeLocation: {
+    //             type: 'Point',
+    //             // must follow longitude, latitude order
+    //             coordinates: [105.005675, 10.367511]
+    //         }
+    //     });
+    //     user.save(function (err, user) {
+    //         if (err) return console.error(err);
+    //         console.log(user);
+    //     });
 
-//     var car = new Car({
-//         type: 1,
-//         lastestGeo: {
-//             type: "Point",
-//             coordinates: [105.045705, 21.345696]
-//         },
-//         currentGeo: {
-//             type: "Point",
-//             coordinates: [105.078940, 21.312346]
-//         },
-//         speed: 80,
-//         userID: user._id
-//     });
-//     car.save(function (err, car) {
-//         if (err) return console.error(err);
-//         console.log(car);
-//     });
+    //     var car = new Car({
+    //         type: 1,
+    //         lastestGeo: {
+    //             type: "Point",
+    //             coordinates: [105.045705, 21.345696]
+    //         },
+    //         currentGeo: {
+    //             type: "Point",
+    //             coordinates: [105.078940, 21.312346]
+    //         },
+    //         speed: 80,
+    //         userID: user._id
+    //     });
+    //     car.save(function (err, car) {
+    //         if (err) return console.error(err);
+    //         console.log(car);
+    //     });
 
-//     var location = new Location({
-//         geomatry: {
-//             type: "Point",
-//             coordinates: [105.045705, 21.345696]
-//         },
-//         name: 'Home',
-//         userID: user._id
-//     });
-//     location.save(function (err, location) {
-//         if (err) return console.error(err);
-//         console.log(location);
-//     });
+    //     var location = new Location({
+    //         geomatry: {
+    //             type: "Point",
+    //             coordinates: [105.045705, 21.345696]
+    //         },
+    //         name: 'Home',
+    //         userID: user._id
+    //     });
+    //     location.save(function (err, location) {
+    //         if (err) return console.error(err);
+    //         console.log(location);
+    //     });
 
-//     var report = new Report({
-//         type: 1,
-//         desciption: 'Trafic jam',
-//         geomatry: {
-//             type: "Point",
-//             coordinates: [105.045705, 21.345696]
-//         },
-//         severity: 3,
-//         userID: user._id
-//     });
-//     report.save(function (err, report) {
-//         if (err) return console.error(err);
-//         console.log(report);
-//     });
+    //     var report = new Report({
+    //         type: 1,
+    //         desciption: 'Trafic jam',
+    //         geomatry: {
+    //             type: "Point",
+    //             coordinates: [105.045705, 21.345696]
+    //         },
+    //         severity: 3,
+    //         userID: user._id
+    //     });
+    //     report.save(function (err, report) {
+    //         if (err) return console.error(err);
+    //         console.log(report);
+    //     });
 
-//     console.log('Connect to database successfuly');
-// }).on('error',() => {
-//     console.log('Conmect to database failed')
+    console.log('Connect to database successfuly');
+}).on('error', () => {
+    console.log('Conmect to database failed')
 });
 ////////////////// END mLab - Heroku ////////////////
 
 
 // Body-parser json
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+// app.use(bodyParser({limit: '5mb'}))
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
 // This line must be right after any of the bodyParser middleware
 app.use(expressValidator());
@@ -210,7 +215,7 @@ app.use((req, res, next) => {
 
 
 // Home page
-app.get("/",(req, res) => {
+app.get("/", (req, res) => {
     res.send("Car Map API<br>API for user: /api-user/v1/xxx");
 })
 
@@ -236,54 +241,54 @@ app.use((err, req, res, next) => {
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-io.on('connection',(socket) => {
+io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('chat message',(msg) => {
+    socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
     });
 
-    socket.on('event_hello_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_hello_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_hello_socket', email, send_id, msg)
     });
 
-    socket.on('event_warn_strong_light_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_warn_strong_light_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_strong_light_socket', email, send_id, msg)
     });
 
-    socket.on('event_warn_police_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_warn_police_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_police_socket', email, send_id, msg)
     });
 
-    socket.on('event_warn_slow_down_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_warn_slow_down_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_slow_down_socket', email, send_id, msg)
     });
 
-    socket.on('event_warn_turn_around_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_warn_turn_around_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_turn_around_socket', email, send_id, msg)
     });
 
-    socket.on('event_warn_thank_server',(email, send_id, receive_id, msg) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + msg);
+    socket.on('event_warn_thank_server', (email, send_id, receive_id, msg) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
         socket.broadcast.to(receive_id).emit('event_warn_thank_socket', email, send_id, msg)
     });
 
-    socket.on('event_report_other_server',(email, send_id, receive_id, type, base64, license) => {
-        console.log('user:' + send_id + 'to '+ receive_id + ' - message: ' + type);
+    socket.on('event_report_other_server', (email, send_id, receive_id, type, base64, license) => {
+        console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + type);
         socket.broadcast.to(receive_id).emit('event_report_other_socket', email, send_id, type, base64, license)
     });
-    
-    socket.on('disconnect',() => {
+
+    socket.on('disconnect', () => {
         console.log('user disconnected');
     });
 });
 
-http.listen(config.port,() => {
-    console.log('listening on *:'+ config.port);
+http.listen(config.port, () => {
+    console.log('listening on *:' + config.port);
 });

@@ -35,7 +35,8 @@ const ReportSchema = new Schema({
     byteImageFile: {
         type: String,
         default: ""
-    }
+    },
+    phoneNumber: String
 })
 
 

@@ -26,7 +26,11 @@ const UserSchema = new Schema({
     latHomeLocation: Number,
     longHomeLocation: Number,
     latWorkLocation: Number,
-    longWorkLocation: Number
+    longWorkLocation: Number,
+    typeCar: String,
+    modelCar: String,
+    colorCar: String,
+    status: String
 });
 
 // Method to compare password for login

@@ -51,7 +51,12 @@ router.post("/email", (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         name: req.body.name,
-        birthDate: req.body.birthDate
+        birthDate: req.body.birthDate,
+        status: req.body.status,
+        phoneNumber: req.body.phoneNumber,
+        typeCar: req.body.typeCar,
+        modelCar: req.body.modelCar,
+        colorCar: req.body.colorCar
     });
 
     user.save().then((user) => {

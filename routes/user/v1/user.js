@@ -259,4 +259,33 @@ router.put("/updateMyCar", authenticate, (req, res, next) => {
             });
         }).catch(next);
 })
+
+// Update status
+router.put("/updateStatus", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
+    if (!userID) {
+        return res.status(422).send({
+            success: false,
+            message: "Không thể truy cập userID"
+        });
+    }
+
+    User
+        .findByIdAndUpdate(userID, {
+            status: req.body.status
+        })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Người dùng không tồn tại"
+                });
+            }
+            return res.status(200).send({
+                success: true,
+                user: user
+            });
+        }).catch(next);
+})
+
 module.exports = router;

@@ -20,7 +20,7 @@ const ReportSchema = new Schema({
         type: String,
         default: ""
     },
-    geomatry: GeoSchema,
+    geometry: GeoSchema,
     userID: {
         type: Schema.Types.ObjectId,
         ref: 'user'

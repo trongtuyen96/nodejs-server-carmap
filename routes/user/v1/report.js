@@ -83,15 +83,31 @@ router.put("/:id/updateNumReport", (req, res, next) => {
 router.put("/:id/updateNumDelete", (req, res, next) => {
     let reportID = req.params.id;
     // validate the id  -> return 404
-    if (mongoose.Types.ObjectId.isValid(reportID)) {
-        return res.status(404).json({
-            success: false,
-            message: "Không tìm thấy report"
-        })
-    }
+    // if (mongoose.Types.ObjectId.isValid(reportID)) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Không tìm thấy report"
+    //     })
+    // }
+    // Report
+    //     .findByIdAndUpdate(reportID, {
+    //         numDelete: numDelete + 1
+    //     })
+    //     .then((report) => {
+    //         if (report.numDelete >= 2) {
+    //             Report.findByIdAndRemove(reportID).then((report) => {
+    //                 return res.status(200).send({
+    //                     success: true
+    //                 });
+    //             })
+    //         }
+    //         return res.status(200).send({
+    //             success: true
+    //         });
+    //     }).catch(next);
     Report
         .findByIdAndUpdate(reportID, {
-            numDelete: numDelete + 1
+            $inc: { numDelete: 1 }
         })
         .then((report) => {
             if (report.numDelete >= 2) {

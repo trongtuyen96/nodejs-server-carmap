@@ -200,4 +200,33 @@ router.put("/updateHomeLocation", authenticate, (req, res, next) => {
             });
         }).catch(next);
 })
+
+// Update work location
+router.put("/updateWorkLocation", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
+    if (!userID) {
+        return res.status(422).send({
+            success: false,
+            message: "Không thể truy cập userID"
+        });
+    }
+
+    User
+        .findByIdAndUpdate(userID, {
+            latWorkLocation: req.body.latWorkLocation,
+            longWorkLocation: req.body.longWorkLocation
+        })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Người dùng không tồn tại"
+                });
+            }
+            return res.status(200).send({
+                success: true,
+                user: user
+            });
+        }).catch(next);
+})
 module.exports = router;

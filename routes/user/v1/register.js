@@ -35,6 +35,10 @@ router.post("/email", (req, res, next) => {
                 errorMessage: 'Ngày sinh không hợp lệ'
             },
             errorMessage: 'Ngày sinh không thể bỏ trống'
+        },
+        'phoneNumber': {
+            notEmpty: true,
+            errorMessage: 'Số điện thoại không thể bỏ trống'
         }
     });
 

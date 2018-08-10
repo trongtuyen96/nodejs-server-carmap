@@ -213,5 +213,25 @@ router.put("/:id/updateBase64Voice", (req, res, next) => {
         }).catch(next);
 })
 
+// Delete report
+router.delete("/:id/delete", (req, res, next) => {
+    let reportID = req.params.id;
+
+    // let sreportID = new mongoose.Types.ObjectId(reportID)
+    // // validate the id  -> return 404
+    // if (mongoose.Types.ObjectId.isValid(sreportID)) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Không tìm thấy report"
+    //     })
+    // }
+    Report
+        .findByIdAndRemove(reportID)
+        .then(() => {
+            return res.status(200).send({
+                success: true
+            });
+        }).catch(next);
+})
 
 module.exports = router;

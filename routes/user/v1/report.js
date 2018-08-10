@@ -184,4 +184,34 @@ router.get("/nearby", (req, res, next) => {
     }).catch(next);
 });
 
+// Update voice base64
+router.put("/:id/updateBase64Voice", (req, res, next) => {
+    let reportID = req.params.id;
+
+    // validate the id  -> return 404
+    // if (mongoose.Types.ObjectId.isValid(reportID)) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Không tìm thấy report"
+    //     })
+    // }
+    Report
+        .findByIdAndUpdate(reportID, {
+            byteAudioFile: req.body.base64Voice
+        })
+        .then((report) => {
+            if (!report) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Không tìm thấy report"
+                });
+            }
+            return res.status(200).send({
+                success: true,
+                report: report
+            });
+        }).catch(next);
+})
+
+
 module.exports = router;

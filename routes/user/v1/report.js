@@ -41,27 +41,37 @@ router.get("/", (req, res, next) => {
 router.put("/:id/updateNumReport", (req, res, next) => {
     let reportID = req.params.id;
     // validate the id  -> return 404
-    if (!mongoose.Types.ObjectId.isValid(reportID)) {
-        return res.status(404).json({
-            success: false,
-            message: "Không tìm thấy report"
-        })
-    }
+    // if (!mongoose.Types.ObjectId.isValid(reportID)) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Không tìm thấy report"
+    //     })
+    // }
+    // Report
+    //     .findByIdAndUpdate(reportID, {
+    //         numReport: numReport + 1
+    //     })
+    //     .then((report) => {
+    //         if (report.numReport >= 2) {
+    //             Report.findByIdAndUpdate(reportID, {
+    //                 status: true
+    //             }).then((report) => {
+    //                 return res.status(200).send({
+    //                     success: true,
+    //                     report: report
+    //                 });
+    //             })
+    //         }
+    //         return res.status(200).send({
+    //             success: true,
+    //             report: report
+    //         });
+    //     }).catch(next);
     Report
         .findByIdAndUpdate(reportID, {
-            numReport: numReport + 1
+            $inc: { numReport: 1 }
         })
         .then((report) => {
-            if (report.numReport >= 2) {
-                Report.findByIdAndUpdate(reportID, {
-                    status: true
-                }).then((report) => {
-                    return res.status(200).send({
-                        success: true,
-                        report: report
-                    });
-                })
-            }
             return res.status(200).send({
                 success: true,
                 report: report

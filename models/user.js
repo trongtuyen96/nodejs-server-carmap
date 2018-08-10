@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     googleUserID: String, 
     avatar: String,
     socketID: String,
-    homeLocation: GeoSchema
+    currentLocation: GeoSchema
 });
 
 // Method to compare password for login

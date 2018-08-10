@@ -46,9 +46,9 @@ router.get("/", authenticate, (req, res, next) => {
 });
 
 // Update home location of user
-router.put("/updateHomeLocation", authenticate, (req, res, next) => {
+router.put("/updateCurrentLocation", authenticate, (req, res, next) => {
     let userID = req.decoded.userID;
-    console.log(JSON.stringify(req.body.homeLocation));
+    console.log(JSON.stringify(req.body.currentLocation));
     if (!userID) {
         return res.status(422).send({
             success: false,
@@ -58,7 +58,7 @@ router.put("/updateHomeLocation", authenticate, (req, res, next) => {
 
     User
         .findByIdAndUpdate(userID, {
-            homeLocation: req.body.homeLocation
+            currentLocation: req.body.currentLocation
         })
         .then((user) => {
             if (!user) {
@@ -172,4 +172,32 @@ router.get("/nearby", (req, res, next) => {
     }).catch(next);
 });
 
+// Update home location
+router.put("/updateHomeLocation", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
+    if (!userID) {
+        return res.status(422).send({
+            success: false,
+            message: "Không thể truy cập userID"
+        });
+    }
+
+    User
+        .findByIdAndUpdate(userID, {
+            latHomeLocation: req.body.latHomeLocation,
+            longHomeLocation: req.body.longHomeLocation
+        })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Người dùng không tồn tại"
+                });
+            }
+            return res.status(200).send({
+                success: true,
+                user: user
+            });
+        }).catch(next);
+})
 module.exports = router;

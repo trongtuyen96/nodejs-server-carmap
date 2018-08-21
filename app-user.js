@@ -249,39 +249,39 @@ io.on('connection', (socket) => {
         io.emit('chat message', msg);
     });
 
-    socket.on('event_hello_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_hello_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_hello_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_hello_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_warn_strong_light_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_warn_strong_light_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_warn_strong_light_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_warn_strong_light_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_warn_police_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_warn_watcher_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_warn_police_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_warn_watcher_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_warn_slow_down_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_warn_slow_down_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_warn_slow_down_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_warn_slow_down_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_warn_turn_around_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_warn_turn_around_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_warn_turn_around_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_warn_turn_around_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_warn_thank_server', (email, send_id, receive_id, msg) => {
+    socket.on('event_warn_thank_server', (email, name, send_id, receive_id, msg) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + msg);
-        socket.broadcast.to(receive_id).emit('event_warn_thank_socket', email, send_id, msg)
+        socket.broadcast.to(receive_id).emit('event_warn_thank_socket', email, name, send_id, msg)
     });
 
-    socket.on('event_report_other_server', (email, send_id, receive_id, type, base64, license) => {
+    socket.on('event_report_other_server', (email, name, send_id, receive_id, type, base64, license) => {
         console.log('user:' + send_id + 'to ' + receive_id + ' - message: ' + type);
-        socket.broadcast.to(receive_id).emit('event_report_other_socket', email, send_id, type, base64, license)
+        socket.broadcast.to(receive_id).emit('event_report_other_socket', email, name, send_id, type, base64, license)
     });
 
     socket.on('disconnect', () => {

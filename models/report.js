@@ -5,7 +5,7 @@ const GeoSchema = require('./schemas/geo');
 
 const ReportSchema = new Schema({
     type: {
-        type: Number,
+        type: String,
         require: true
     },
     subtype1: {
@@ -16,7 +16,7 @@ const ReportSchema = new Schema({
         type: String,
         default: ""
     },
-    desciption: {
+    description: {
         type: String,
         default: ""
     },

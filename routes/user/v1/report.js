@@ -73,8 +73,9 @@ router.put("/:id/updateNumReport", (req, res, next) => {
         })
         .then((report) => {
             return res.status(200).send({
-                success: true,
-                report: report
+                success: true
+                // success: true,
+                // report: report
             });
         }).catch(next);
 })
@@ -207,8 +208,9 @@ router.put("/:id/updateBase64Voice", (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                report: report
+                success: true
+                // success: true,
+                // report: report
             });
         }).catch(next);
 })

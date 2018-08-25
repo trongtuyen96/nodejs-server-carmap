@@ -68,8 +68,9 @@ router.put("/updateCurrentLocation", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                // success: true,
+                // user: user
             });
         }).catch(next);
 })
@@ -96,8 +97,9 @@ router.put("/updateSocketID", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                // success: true,
+                // user: user
             });
         }).catch(next);
 })
@@ -195,8 +197,9 @@ router.put("/updateHomeLocation", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                // success: true,
+                // user: user
             });
         }).catch(next);
 })
@@ -224,8 +227,9 @@ router.put("/updateWorkLocation", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                 // success: true,
+                // user: user
             });
         }).catch(next);
 })
@@ -254,8 +258,9 @@ router.put("/updateMyCar", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                 // success: true,
+                // user: user
             });
         }).catch(next);
 })
@@ -282,8 +287,9 @@ router.put("/updateStatus", authenticate, (req, res, next) => {
                 });
             }
             return res.status(200).send({
-                success: true,
-                user: user
+                success: true
+                 // success: true,
+                // user: user
             });
         }).catch(next);
 })

@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 const Report = require('../../../models/report')
 
 // Get nearby report leads to this and output: Không tìm thấy report ??????
-// Get report by id
+// // Get report by id
 // router.get("/:id", (req, res, next) => {
 //     let reportID = req.params.id;
 //     // validate the id  -> return 404
-//     if (!ObjectID.isValid(reportID)) {
-//         return res(404).json({
+//     if (!mongoose.Types.ObjectId.isValid(reportID)) {
+//         return res.status(404).json({
 //             success: false,
 //             message: "Không tìm thấy report"
 //         })
@@ -19,12 +19,12 @@ const Report = require('../../../models/report')
 //         .findById(reportID)
 //         .then((report) => {
 //             if (!report) {
-//                 return res(404).json({
+//                 return res.status(404).json({
 //                     success: false,
 //                     message: "Không tìm thấy report"
 //                 })
 //             }
-//             res.status(200).json(location);
+//             res.status(200).json(report);
 //         }).catch(next);
 // });
 
@@ -47,26 +47,6 @@ router.put("/:id/updateNumReport", (req, res, next) => {
     //         message: "Không tìm thấy report"
     //     })
     // }
-    // Report
-    //     .findByIdAndUpdate(reportID, {
-    //         numReport: numReport + 1
-    //     })
-    //     .then((report) => {
-    //         if (report.numReport >= 2) {
-    //             Report.findByIdAndUpdate(reportID, {
-    //                 status: true
-    //             }).then((report) => {
-    //                 return res.status(200).send({
-    //                     success: true,
-    //                     report: report
-    //                 });
-    //             })
-    //         }
-    //         return res.status(200).send({
-    //             success: true,
-    //             report: report
-    //         });
-    //     }).catch(next);
     Report
         .findByIdAndUpdate(reportID, {
             $inc: { numReport: 1 }
@@ -90,22 +70,6 @@ router.put("/:id/updateNumDelete", (req, res, next) => {
     //         message: "Không tìm thấy report"
     //     })
     // }
-    // Report
-    //     .findByIdAndUpdate(reportID, {
-    //         numDelete: numDelete + 1
-    //     })
-    //     .then((report) => {
-    //         if (report.numDelete >= 2) {
-    //             Report.findByIdAndRemove(reportID).then((report) => {
-    //                 return res.status(200).send({
-    //                     success: true
-    //                 });
-    //             })
-    //         }
-    //         return res.status(200).send({
-    //             success: true
-    //         });
-    //     }).catch(next);
     Report
         .findByIdAndUpdate(reportID, {
             $inc: { numDelete: 1 }
@@ -178,9 +142,14 @@ router.get("/nearby", (req, res, next) => {
         //     distances.push(result.dis);
         // });
 
-        // return res.status(200).json({
-        //     reports: reports,
-        //     distances: distances
+        // var reports = [];
+        // var distances = [];
+        // results.forEach((result) => {
+        //     var report = Object.assign({}, result.obj)
+        //     report.byteAudioFile = ''
+        //     report.byteImageFile = ''
+        //     reports.push(report);
+        //     distances.push(result.dis);
         // });
 
         var reports = [];
@@ -240,6 +209,7 @@ router.put("/:id/updateBase64Voice", (req, res, next) => {
             });
         }).catch(next);
 })
+
 
 // Delete report
 router.delete("/:id/delete", (req, res, next) => {

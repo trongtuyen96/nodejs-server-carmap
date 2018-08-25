@@ -171,10 +171,36 @@ router.get("/nearby", (req, res, next) => {
     Report.geoNear(centralPoint, geoOptions).then((results) => {
         //console.log("Time consumed: " + stats.time);
 
+        // var reports = [];
+        // var distances = [];
+        // results.forEach((result) => {
+        //     reports.push(result.obj);
+        //     distances.push(result.dis);
+        // });
+
+        // return res.status(200).json({
+        //     reports: reports,
+        //     distances: distances
+        // });
+
         var reports = [];
         var distances = [];
         results.forEach((result) => {
-            reports.push(result.obj);
+            reports.push({
+                '_id': result.obj._id,
+                'type': result.obj.type,
+                'subtype1': result.obj.subtype1,
+                'subtype2': result.obj.subtype2,
+                'description': result.obj.description,
+                'geometry': result.obj.geometry,
+                'userID': result.obj.userID,
+                'numReport': result.obj.numReport,
+                'numDelete': result.obj.numDelete,
+                'status': result.obj.status,
+                'byteAudioFile': '',
+                'byteImageFile': '',
+                'phoneNumber': result.obj.phoneNumber
+            })
             distances.push(result.dis);
         });
 

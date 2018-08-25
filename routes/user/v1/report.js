@@ -262,5 +262,35 @@ router.delete("/:id/delete", (req, res, next) => {
         }).catch(next);
 })
 
+// Get Base64Image report by id
+router.get("/:id/getBase64Image", (req, res, next) => {
+    let reportID = req.params.id;
+    Report
+        .findById(reportID)
+        .then((report) => {
+            if (!report) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Không tìm thấy report"
+                })
+            }
+            else {
+                var newReport = report
+                newReport._id = ''
+                newReport.type = ''
+                newReport.subtype1 = ''
+                newReport.subtype2 = ''
+                newReport.description = ''
+                newReport.userID = ''
+                newReport.byteAudioFile = ''
+                newReport.byteImageFile = report.byteImageFile
+                newReport.phoneNumber = ''
+                return res.status(200).send({
+                    success: true,
+                    report: newReport
+                });
+            }
+        }).catch(next);
+});
 
 module.exports = router;

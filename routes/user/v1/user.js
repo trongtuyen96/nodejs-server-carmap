@@ -294,4 +294,33 @@ router.put("/updateStatus", authenticate, (req, res, next) => {
         }).catch(next);
 })
 
+// Update license plate
+router.put("/updateLicensePlate", authenticate, (req, res, next) => {
+    let userID = req.decoded.userID;
+    if (!userID) {
+        return res.status(422).send({
+            success: false,
+            message: "Không thể truy cập userID"
+        });
+    }
+
+    User
+        .findByIdAndUpdate(userID, {
+            licensePlate: req.body.licensePlate
+        })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Người dùng không tồn tại"
+                });
+            }
+            return res.status(200).send({
+                success: true
+                // success: true,
+                // user: user
+            });
+        }).catch(next);
+})
+
 module.exports = router;

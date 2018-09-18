@@ -34,6 +34,10 @@ const UserSchema = new Schema({
     phoneNumber: {
         type: String,
         required: true
+    },
+    licensePlate: {
+        type: String,
+        default: ""
     }
 });
 

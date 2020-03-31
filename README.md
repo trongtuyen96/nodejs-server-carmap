@@ -26,7 +26,7 @@ Open with editor to make changes in code if you need. Run with command line: nod
 - 27/04/2018: First commit
 
 ## Author
-* **Tuyen Nguyen Trong** - *Initial work* - [nQueens-Python](https://github.com/trongtuyen96/NQueens) 
+* **Tuyen Nguyen Trong**
 - *Email* - trongtuyen96@gmail.com
 
 ## License

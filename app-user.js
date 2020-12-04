@@ -99,8 +99,8 @@ const app = express();
 
 ///////////////////// MLAB - HEROKU ///////////////
 // Only run first time to create data for mLab collections
-// Connect to mongo db m-Lab
-mongoose.connect(config.database_mlab);
+// Connect to mongo db mongo cloud
+mongoose.connect(config.database_mongo_cloud, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 mongoose.connection.once('open', () => {
     //     // Create sample data for database 
     //     var user = new User({

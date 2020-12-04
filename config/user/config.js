@@ -8,7 +8,7 @@ module.exports = {
     'database_mlab': 'mongodb://admin:123456@ds211440.mlab.com:11440/carmap',
 
     // Database Mongo Clould
-    'database_mongo_cloud': 'mongodb+srv://admin:Admin123456@carmap.wlchv.mongodb.net/test?retryWrites=true&w=majority',
+    'database_mongo_cloud': 'mongodb+srv://admin:Admin123456@carmap.wlchv.mongodb.net/carmap?retryWrites=true&w=majority',
     
     
     // Setting port for server
